@@ -9,7 +9,7 @@ import { updateAccountSchema } from "@/lib/zodSchemes/accountsScheme";
 
 export async function GET(
   req: NextRequest,
-  { params }: { params: { accountId: string } },
+  { params }: { params: Promise<{ accountId: string }> },
 ) {
   try {
     const session = await auth.api.getSession({
@@ -19,7 +19,8 @@ export async function GET(
       return new NextResponse("Unauthorized", { status: 401 });
     }
 
-    const accountId = parseInt(params.accountId, 10);
+    const { accountId: accountIdParam } = await params;
+    const accountId = parseInt(accountIdParam, 10);
     if (isNaN(accountId)) {
       return new NextResponse("Invalid Account ID", { status: 400 });
     }
@@ -50,7 +51,7 @@ export async function GET(
 
 export async function PUT(
   req: NextRequest,
-  { params }: { params: { accountId: string } },
+  { params }: { params: Promise<{ accountId: string }> },
 ) {
   try {
     const session = await auth.api.getSession({
@@ -60,7 +61,8 @@ export async function PUT(
       return new NextResponse("Unauthorized", { status: 401 });
     }
 
-    const accountId = parseInt(params.accountId, 10);
+    const { accountId: accountIdParam } = await params;
+    const accountId = parseInt(accountIdParam, 10);
     if (isNaN(accountId)) {
       return new NextResponse("Invalid Account ID", { status: 400 });
     }
@@ -97,7 +99,7 @@ export async function PUT(
 
 export async function DELETE(
   req: NextRequest,
-  { params }: { params: { accountId: string } },
+  { params }: { params: Promise<{ accountId: string }> },
 ) {
   try {
     const session = await auth.api.getSession({
@@ -107,7 +109,8 @@ export async function DELETE(
       return new NextResponse("Unauthorized", { status: 401 });
     }
 
-    const accountId = parseInt(params.accountId, 10);
+    const { accountId: accountIdParam } = await params;
+    const accountId = parseInt(accountIdParam, 10);
     if (isNaN(accountId)) {
       return new NextResponse("Invalid Account ID", { status: 400 });
     }
