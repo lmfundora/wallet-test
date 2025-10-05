@@ -7,11 +7,10 @@ import * as z from "zod";
 import { headers } from "next/headers";
 import { updateAccountSchema } from "@/lib/zodSchemes/accountsScheme";
 
-interface RouteContext {
-  params: { accountId: string };
-}
-
-export async function GET(req: NextRequest, context: RouteContext) {
+export async function GET(
+  req: NextRequest,
+  { params }: { params: { accountId: string } },
+) {
   try {
     const session = await auth.api.getSession({
       headers: await headers(),
@@ -20,7 +19,7 @@ export async function GET(req: NextRequest, context: RouteContext) {
       return new NextResponse("Unauthorized", { status: 401 });
     }
 
-    const accountId = parseInt(context.params.accountId, 10);
+    const accountId = parseInt(params.accountId, 10);
     if (isNaN(accountId)) {
       return new NextResponse("Invalid Account ID", { status: 400 });
     }
@@ -49,7 +48,10 @@ export async function GET(req: NextRequest, context: RouteContext) {
   }
 }
 
-export async function PUT(req: NextRequest, context: RouteContext) {
+export async function PUT(
+  req: NextRequest,
+  { params }: { params: { accountId: string } },
+) {
   try {
     const session = await auth.api.getSession({
       headers: await headers(),
@@ -58,7 +60,7 @@ export async function PUT(req: NextRequest, context: RouteContext) {
       return new NextResponse("Unauthorized", { status: 401 });
     }
 
-    const accountId = parseInt(context.params.accountId, 10);
+    const accountId = parseInt(params.accountId, 10);
     if (isNaN(accountId)) {
       return new NextResponse("Invalid Account ID", { status: 400 });
     }
@@ -93,7 +95,10 @@ export async function PUT(req: NextRequest, context: RouteContext) {
   }
 }
 
-export async function DELETE(req: NextRequest, context: RouteContext) {
+export async function DELETE(
+  req: NextRequest,
+  { params }: { params: { accountId: string } },
+) {
   try {
     const session = await auth.api.getSession({
       headers: await headers(),
@@ -102,7 +107,7 @@ export async function DELETE(req: NextRequest, context: RouteContext) {
       return new NextResponse("Unauthorized", { status: 401 });
     }
 
-    const accountId = parseInt(context.params.accountId, 10);
+    const accountId = parseInt(params.accountId, 10);
     if (isNaN(accountId)) {
       return new NextResponse("Invalid Account ID", { status: 400 });
     }
