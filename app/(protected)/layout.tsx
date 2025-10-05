@@ -25,7 +25,7 @@ export default function DashboardLayout({
               variant="secondary"
               className="my-1 mx-3"
               key={item.name}
-              asChild // Use asChild to pass props to the Link component
+              asChild
             >
               <Link
                 href={item.href}

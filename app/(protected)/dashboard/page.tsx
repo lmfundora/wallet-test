@@ -28,7 +28,6 @@ export default function DashboardPage() {
     string | undefined
   >(undefined);
 
-  // Set default selected account to the first one when accounts are loaded
   useEffect(() => {
     if (
       !selectedAccountId &&

@@ -1,4 +1,4 @@
-import { NextResponse } from "next/server";
+import { NextResponse, NextRequest } from "next/server";
 import { auth } from "@/lib/auth";
 import { db } from "@/lib/db";
 import { monetaryAccounts } from "@/lib/db/schema/accounts";
@@ -7,10 +7,11 @@ import * as z from "zod";
 import { headers } from "next/headers";
 import { updateAccountSchema } from "@/lib/zodSchemes/accountsScheme";
 
-export async function GET(
-  req: Request,
-  { params }: { params: { accountId: string } },
-) {
+interface RouteContext {
+  params: { accountId: string };
+}
+
+export async function GET(req: NextRequest, context: RouteContext) {
   try {
     const session = await auth.api.getSession({
       headers: await headers(),
@@ -19,7 +20,7 @@ export async function GET(
       return new NextResponse("Unauthorized", { status: 401 });
     }
 
-    const accountId = parseInt(params.accountId, 10);
+    const accountId = parseInt(context.params.accountId, 10);
     if (isNaN(accountId)) {
       return new NextResponse("Invalid Account ID", { status: 400 });
     }
@@ -48,10 +49,7 @@ export async function GET(
   }
 }
 
-export async function PUT(
-  req: Request,
-  { params }: { params: { accountId: string } },
-) {
+export async function PUT(req: NextRequest, context: RouteContext) {
   try {
     const session = await auth.api.getSession({
       headers: await headers(),
@@ -60,7 +58,7 @@ export async function PUT(
       return new NextResponse("Unauthorized", { status: 401 });
     }
 
-    const accountId = parseInt(params.accountId, 10);
+    const accountId = parseInt(context.params.accountId, 10);
     if (isNaN(accountId)) {
       return new NextResponse("Invalid Account ID", { status: 400 });
     }
@@ -95,10 +93,7 @@ export async function PUT(
   }
 }
 
-export async function DELETE(
-  req: Request,
-  { params }: { params: { accountId: string } },
-) {
+export async function DELETE(req: NextRequest, context: RouteContext) {
   try {
     const session = await auth.api.getSession({
       headers: await headers(),
@@ -107,7 +102,7 @@ export async function DELETE(
       return new NextResponse("Unauthorized", { status: 401 });
     }
 
-    const accountId = parseInt(params.accountId, 10);
+    const accountId = parseInt(context.params.accountId, 10);
     if (isNaN(accountId)) {
       return new NextResponse("Invalid Account ID", { status: 400 });
     }

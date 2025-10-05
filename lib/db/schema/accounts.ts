@@ -7,9 +7,8 @@ import {
   serial,
   integer,
 } from "drizzle-orm/pg-core";
-import { user } from "./auth-schema"; // Assuming auth-schema.ts is in the same directory
+import { user } from "./auth-schema";
 
-// Optional: Define an enum for transaction types for better data integrity
 export const transactionTypeEnum = pgEnum("transaction_type", [
   "deposit",
   "withdrawal",

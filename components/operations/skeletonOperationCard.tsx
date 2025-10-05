@@ -1,4 +1,4 @@
-import { Skeleton } from "@/components/ui/skeleton"; // Assuming a generic Skeleton component exists
+import { Skeleton } from "@/components/ui/skeleton";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 export default function SkeletonTransactionCard() {

@@ -1,5 +1,5 @@
 import { ArrowDown, ArrowUp } from "lucide-react";
-import type { Transaction } from "@/lib/types/transactions"; // Ensure correct import for Transaction type
+import type { Transaction } from "@/lib/types/transactions";
 import { Card } from "../ui/card";
 import { Account } from "@/lib/types/account";
 

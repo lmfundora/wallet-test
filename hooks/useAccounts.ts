@@ -48,7 +48,6 @@ export const createAccount = (): UseMutationResult<
   });
 };
 
-// Hook to update an existing account
 export const updateAccount = (): UseMutationResult<
   Account,
   Error,
@@ -69,7 +68,6 @@ export const updateAccount = (): UseMutationResult<
   });
 };
 
-// Hook to delete an account
 export const deleteAccount = (): UseMutationResult<
   void,
   Error,

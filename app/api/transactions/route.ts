@@ -1,9 +1,9 @@
-import { NextResponse } from "next/server";
+import { NextResponse, NextRequest } from "next/server";
 import { db } from "@/lib/db";
 import { transactions, monetaryAccounts } from "@/lib/db/schema/accounts";
 import { eq, and, gte, lte } from "drizzle-orm";
 import { auth } from "@/lib/auth";
-import { z } from "zod"; // Import zod
+import { z } from "zod";
 import { headers } from "next/headers";
 import { createTransactionSchema } from "@/lib/zodSchemes/transactions";
 
@@ -13,7 +13,7 @@ const getTransactionsSchema = z.object({
   accountId: z.coerce.number().int().positive().optional(),
 });
 
-export async function GET(request: Request) {
+export async function GET(request: NextRequest) {
   const session = await auth.api.getSession({
     headers: await headers(),
   });
@@ -46,7 +46,7 @@ export async function GET(request: Request) {
       conditions.push(lte(transactions.createdAt, new Date(endDate)));
     }
     if (accountId) {
-      conditions.push(eq(transactions.accountId, accountId)); // Add accountId filter
+      conditions.push(eq(transactions.accountId, accountId));
     }
 
     const userTransactions = await db
@@ -74,7 +74,7 @@ export async function GET(request: Request) {
   }
 }
 
-export async function POST(request: Request) {
+export async function POST(request: NextRequest) {
   const session = await auth.api.getSession({
     headers: await headers(),
   });
@@ -105,8 +105,10 @@ export async function POST(request: Request) {
       .select()
       .from(monetaryAccounts)
       .where(
-        eq(monetaryAccounts.id, accountId) &&
+        and(
+          eq(monetaryAccounts.id, accountId),
           eq(monetaryAccounts.userId, userId),
+        ),
       )
       .limit(1);
 

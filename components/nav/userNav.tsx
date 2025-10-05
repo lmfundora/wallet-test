@@ -13,11 +13,10 @@ import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Button } from "../ui/button";
 import { authClient } from "@/lib/auth-client";
 import { useRouter } from "next/navigation";
-import { useState } from "react"; // Import useState
+import { useState } from "react";
 
-// Define the props for UserNav
 interface UserNavProps {
-  children: React.ReactNode; // Children is now a standard ReactNode
+  children: React.ReactNode;
   isOpen: boolean;
   setIsOpen: (isOpen: boolean) => void;
 }
@@ -29,7 +28,7 @@ export function UserNav({ children, isOpen, setIsOpen }: UserNavProps) {
   const logOut = () => {
     authClient.signOut();
     router.push("/");
-    setIsOpen(false); // Close drawer on logout
+    setIsOpen(false);
   };
 
   return (

@@ -22,7 +22,7 @@ import {
 } from "@/components/ui/select";
 
 import { useTransaction } from "@/hooks/useTransacion";
-import { useAccounts } from "@/hooks/useAccounts"; // Import useAccounts
+import { useAccounts } from "@/hooks/useAccounts";
 import type { GetTransactionsFilters } from "@/lib/types/transactions";
 import TransactionCard from "@/components/operations/operationCard";
 import SkeletonTransactionCard from "@/components/operations/skeletonOperationCard";
@@ -37,7 +37,6 @@ export default function OperationsPage() {
   const { data: accountsList, isLoading: isLoadingAccounts } =
     useAccounts.accounts();
 
-  // Set default accountId once accounts are loaded
   useEffect(() => {
     if (!selectedAccountId && accountsList && accountsList.length > 0) {
       setSelectedAccountId(String(accountsList[0].id));
@@ -180,7 +179,7 @@ export default function OperationsPage() {
                 onClick={() => {
                   setStartDate(undefined);
                   setEndDate(undefined);
-                  setSelectedAccountId("all"); // Reset to 'Todas las Cuentas'
+                  setSelectedAccountId("all");
                 }}
               >
                 Limpiar Filtros

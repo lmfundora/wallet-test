@@ -1,4 +1,4 @@
-import { z } from "zod"; // Import zod
+import { z } from "zod";
 
 export const createTransactionSchema = z.object({
   accountId: z.number().int().positive(),
