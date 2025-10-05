@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect } from "react";
+import { Suspense, useEffect } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { ArrowLeft } from "lucide-react";
 import { toast } from "sonner";
@@ -18,7 +18,7 @@ import type * as z from "zod";
 
 type FormData = z.infer<typeof updateAccountSchema>;
 
-export default function UpdateAccount() {
+function UpdateAccountContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const accountId = searchParams.get("id");
@@ -130,5 +130,26 @@ export default function UpdateAccount() {
         isUpdating={true}
       />
     </div>
+  );
+}
+
+function LoadingFallback() {
+  return (
+    <div className="container mx-auto p-6 max-w-2xl">
+      <div className="flex items-center justify-center min-h-[200px]">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary mx-auto mb-4"></div>
+          <p className="text-muted-foreground">Cargando...</p>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+export default function UpdateAccount() {
+  return (
+    <Suspense fallback={<LoadingFallback />}>
+      <UpdateAccountContent />
+    </Suspense>
   );
 }
