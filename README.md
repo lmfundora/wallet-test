@@ -1,37 +1,76 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Wallet Test Project
+
+This project is a personal finance management application.
 
 ## Getting Started
 
-First, run the development server:
+Follow these steps to get your development environment up and running.
+
+### 1. Clone the repository
+
+First, clone the project repository to your local machine:
+
+````bash
+git clone [YOUR_REPOSITORY_URL]
+cd wallet-test
+Replace `[YOUR_REPOSITORY_URL]` with the actual URL of your Git repository.
+Replace `[YOUR_REPOSITORY_URL]` with the actual URL of your Git repository.
+
+### 2. Install Dependencies
+
+This project uses `pnpm` as its package manager. If you don't have `pnpm` installed, you can install it globally:
 
 ```bash
-npm run dev
+npm install -g pnpm
 # or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+yarn global add pnpm
+````
+
+Once `pnpm` is installed, navigate to the project root and install the dependencies:
+
+```bash
+pnpm install
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### 3. Environment Configuration
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Create a `.env` file in the root of the project by copying the `.env.example` file (if one exists). You will need to configure your database connection and authentication details in this file.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+cp .env.example .env # If .env.example exists
+```
 
-## Learn More
+**Example `.env` configuration (you may need to adjust this based on your actual setup):**
 
-To learn more about Next.js, take a look at the following resources:
+```env
+# Database Configuration (for Drizzle ORM)
+DATABASE_URL="postgresql://user:password@host:port/database"
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+BETTER_AUTH_SECRET="YOUR_AUTH_SECRET"
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+NEXT_PUBLIC_AUTH_BASE_URL="http://localhost:3000"
+```
 
-## Deploy on Vercel
+**Important:** Replace placeholder values (e.g., `YOUR_DATABASE_URL`, `YOUR_AUTH_SECRET`, etc.) with your actual credentials and settings. The `AUTH_SECRET` should be a long, random string.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### 4. Run Database Migrations
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
-# wallet-test
+This project uses Drizzle ORM for database management. After configuring your `.env` file, run the migrations to set up your database schema:
+
+```bash
+npx drizzle-kit generate
+
+npx drizzle-kit migrate
+```
+
+_Note: The exact command might vary if your `drizzle.config.ts` uses a different script or command. Please refer to your `package.json` for specific Drizzle commands if `drizzle-kit push:pg` doesn't work._
+
+### 5. Start the Development Server
+
+Once the dependencies are installed and the database is configured and migrated, you can start the development server:
+
+```bash
+pnpm dev
+```
+
+The application should now be running at `http://localhost:3000` (or the port specified in your `.env` or `next.config.js`).
